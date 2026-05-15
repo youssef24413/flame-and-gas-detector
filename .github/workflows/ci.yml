@@ -6,6 +6,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Compile
-        run: g++ unit_tests.cpp -o run_tests
+        run: g++ unittests.ino -o run_tests
       - name: Execute
         run: ./run_tests
