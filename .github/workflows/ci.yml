@@ -1,11 +1,22 @@
 name: CI/CD Automated Unit Testing
-on: [push]
+
+on: 
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Compile
-        run: g++ unittests -o run_tests
-      - name: Execute
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Compile Unit Tests
+        # هنا بنأكد على اسم الملف unit_tests.cpp والامتداد بتاعه
+        run: g++ unittests.cpp -o run_tests
+
+      - name: Execute Tests
         run: ./run_tests
