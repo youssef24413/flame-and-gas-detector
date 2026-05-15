@@ -7,6 +7,19 @@ on:
     branches: [ main, master ]
 
 jobs:
+build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Compile Unit Tests
+        # لاحظ التعديل هنا: أضفنا اسم الفولدر قبل اسم الملف
+        run: g++ unittests/unittests.cpp -o run_tests
+
+      - name: Execute Tests
+        run: ./run_tests
   # الوظيفة الأولى: اختبار المنطق البرمجي
   logic-testing:
     runs-on: ubuntu-latest
