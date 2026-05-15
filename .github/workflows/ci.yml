@@ -1,0 +1,11 @@
+name: CI/CD Automated Unit Testing
+on: [push]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile
+        run: g++ unit_tests.cpp -o run_tests
+      - name: Execute
+        run: ./run_tests
