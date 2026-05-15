@@ -1,41 +1,35 @@
-name: CI/CD Automated Unit Testing
+name: CI/CD Automated Testing Suite
 
-on: 
+on:
   push:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
 
 jobs:
-  build-and-test:
+  # الوظيفة الأولى: اختبار المنطق البرمجي
+  logic-testing:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
 
       - name: Compile Unit Tests
-        # لاحظ التعديل هنا: أضفنا اسم الفولدر قبل اسم الملف
         run: g++ unittests/unittests.cpp -o run_tests
 
       - name: Execute Tests
         run: ./run_tests
-logic-testing:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Compile and Run Logic Tests
-        run: |
-          g++ unittests/unittests.cpp -o run_tests
-          ./run_tests
 
-  # الوظيفة الثانية: تحليل جودة الكود (Static Analysis)
+  # الوظيفة الثانية: فحص جودة الكود (Static Analysis)
   code-quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
       - name: Install Cppcheck
         run: sudo apt-get install cppcheck
+
       - name: Run Static Analysis
-        # هنا بنخليه يفحص الفولدر الرئيسي بتاع الكود
+        # بيفحص كل ملفات الـ C++ وبيدي خطأ لو فيه مشكلة في جودة الكود
         run: cppcheck --enable=all --error-exitcode=1 .
