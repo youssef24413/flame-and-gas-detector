@@ -20,3 +20,22 @@ jobs:
 
       - name: Execute Tests
         run: ./run_tests
+logic-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Compile and Run Logic Tests
+        run: |
+          g++ unittests/unittests.cpp -o run_tests
+          ./run_tests
+
+  # الوظيفة الثانية: تحليل جودة الكود (Static Analysis)
+  code-quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Cppcheck
+        run: sudo apt-get install cppcheck
+      - name: Run Static Analysis
+        # هنا بنخليه يفحص الفولدر الرئيسي بتاع الكود
+        run: cppcheck --enable=all --error-exitcode=1 .
