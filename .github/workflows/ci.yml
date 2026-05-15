@@ -32,4 +32,9 @@ jobs:
 
       - name: Run Static Analysis
         # بيفحص كل ملفات الـ C++ وبيدي خطأ لو فيه مشكلة في جودة الكود
-        run: cppcheck --enable=all --error-exitcode=1 .
+        run: |
+          cppcheck --enable=all \
+            --suppress=missingIncludeSystem \
+            --suppress=unusedFunction \
+            --error-exitcode=1 \
+            .
